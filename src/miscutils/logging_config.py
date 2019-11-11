@@ -38,7 +38,9 @@ class Verbosity(IntEnum):
 
 
 def default_logging(
-    verbosity: Verbosity, log_format: LogFormat = LogFormat.TEXT, external_logs: Iterable[str] = None
+    verbosity: Verbosity,
+    log_format: LogFormat = LogFormat.TEXT,
+    external_logs: Iterable[str] = None,
 ):
     """
     Configure structlog based on the given parameters.
