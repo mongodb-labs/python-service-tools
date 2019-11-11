@@ -9,6 +9,7 @@ from typing import Iterable
 import structlog
 
 TEXT_LOG_FORMAT = "[%(levelname)s %(filename)s:%(funcName)s:%(lineno)s] %(message)s"
+VERBOSE_LEVELS = [logging.WARNING, logging.INFO, logging.DEBUG]
 
 
 class LogFormat(Enum):
@@ -26,12 +27,18 @@ class Verbosity(IntEnum):
     DEBUG = 2
     MAX = 3
 
+    def level(self):
+        """
+        Get the `logging` level for this verbosity.
 
-VERBOSE_LEVELS = [logging.WARNING, logging.INFO, logging.DEBUG]
+        :return: logging level.
+        """
+        v = self.value
+        return VERBOSE_LEVELS[v] if v < len(VERBOSE_LEVELS) else VERBOSE_LEVELS[-1]
 
 
 def default_logging(
-    verbosity: int, log_format: LogFormat = LogFormat.TEXT, external_logs: Iterable[str] = None
+    verbosity: Verbosity, log_format: LogFormat = LogFormat.TEXT, external_logs: Iterable[str] = None
 ):
     """
     Configure structlog based on the given parameters.
@@ -43,7 +50,7 @@ def default_logging(
     :param external_logs: External modules that should have logging turned down unless verbosity is
         set to highest level.
     """
-    level = VERBOSE_LEVELS[verbosity] if verbosity < len(VERBOSE_LEVELS) else VERBOSE_LEVELS[-1]
+    level = verbosity.level()
 
     if log_format == LogFormat.TEXT:
         logging.basicConfig(level=level, stream=sys.stdout, format=TEXT_LOG_FORMAT)
