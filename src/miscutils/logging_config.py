@@ -38,9 +38,7 @@ class Verbosity(IntEnum):
 
 
 def default_logging(
-    verbosity: Verbosity,
-    log_format: LogFormat = LogFormat.TEXT,
-    external_logs: Iterable[str] = None,
+    verbosity: int, log_format: LogFormat = LogFormat.TEXT, external_logs: Iterable[str] = None,
 ):
     """
     Configure structlog based on the given parameters.
@@ -52,7 +50,7 @@ def default_logging(
     :param external_logs: External modules that should have logging turned down unless verbosity is
         set to highest level.
     """
-    level = verbosity.level()
+    level = Verbosity(verbosity).level()
 
     if log_format == LogFormat.TEXT:
         logging.basicConfig(level=level, stream=sys.stdout, format=TEXT_LOG_FORMAT)
@@ -104,7 +102,7 @@ def default_logging(
 
     # Unless the user specifies higher verbosity than we have levels, turn down the log level
     # for external libraries.
-    if external_logs and verbosity == Verbosity.MAX:
+    if external_logs and verbosity < Verbosity.MAX:
         # Turn down logging for modules outside this project.
         for logger in external_logs:
             logging.getLogger(logger).setLevel(logging.WARNING)

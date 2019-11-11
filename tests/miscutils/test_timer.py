@@ -13,4 +13,4 @@ class TestTimer:
 
         assert sample_fn()
 
-        logger.info.assert_called_once()
+        logger.log.assert_called_once()
