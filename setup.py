@@ -36,15 +36,15 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setup(
-    name='miscutils',
+    name='misc-utils-py',
     version=version,
     license='Apache License, Version 2.0',
-    description='Misc utilities for python',
+    description='Misc utilities for python projects',
     long_description=long_description,
     long_description_content_type='text/markdown',
     author='David Bradford',
     author_email='david.bradford@mongodb.com',
-    url='https://github.com/dbradf/miscutils',
+    url='https://github.com/dbradf/misc-utils-py',
     packages=find_packages('src'),
     package_dir={'': 'src'},
     py_modules=[splitext(basename(path))[0] for path in glob('src/*.py')],
