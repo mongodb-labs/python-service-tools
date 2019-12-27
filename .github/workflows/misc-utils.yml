@@ -20,4 +20,4 @@ jobs:
         pip install -r requirements.txt
     - name: Test with pytest
       run: |
-        pytest --flake8 --black --pydocstyle --mypy --cov=src --cov-fail-under=90 --cov-branch --cov-report=term-missing
+        pytest --flake8 --black --pydocstyle --mypy --cov=miscutils --cov-fail-under=90 --cov-branch --cov-report=term-missing
