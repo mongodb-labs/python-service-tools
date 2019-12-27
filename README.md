@@ -42,6 +42,29 @@ def some_function():
     pass
 ```
 
+### Create a namespace relative patch
+
+Create namespace relative patches:
+```python
+import some_package.sub_package.another_package as under_test
+from miscutils.testing import relative_patch_maker
+
+patch = relative_patch_maker(under_test.__name__)
+
+class TestStuff:
+    #equivalent to @unittest.mock.patch("some_package.sub_package.another_package.something_to_patch")
+    @patch("something_to_patch")
+    def test_something(self, patched):
+        under_test.something()
+        patched.assert_called_once()
+
+    #equivalent to @unittest.mock.patch("some_package.sub_package.another_package.something_else_to_patch")
+    @patch("something_else_to_patch")
+    def test_something(self, patched):
+        under_test.something()
+        patched.assert_called_once()
+```
+
 ## Testing
 
 Testing is done via pytest.

@@ -27,7 +27,7 @@ class Verbosity(IntEnum):
     DEBUG = 2
     MAX = 3
 
-    def level(self):
+    def level(self) -> int:
         """
         Get the `logging` level for this verbosity.
 
@@ -38,8 +38,8 @@ class Verbosity(IntEnum):
 
 
 def default_logging(
-    verbosity: int, log_format: LogFormat = LogFormat.TEXT, external_logs: Iterable[str] = None,
-):
+    verbosity: int, log_format: LogFormat = LogFormat.TEXT, external_logs: Iterable[str] = None
+) -> None:
     """
     Configure structlog based on the given parameters.
 

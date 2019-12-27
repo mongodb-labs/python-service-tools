@@ -7,7 +7,7 @@ class TestTimer:
     def test_timing_written_to_log(self):
         logger = MagicMock()
 
-        @under_test.timer(logger)
+        @under_test.timer(logger, details=True)
         def sample_fn():
             return True
 

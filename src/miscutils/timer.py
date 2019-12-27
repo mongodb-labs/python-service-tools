@@ -1,14 +1,14 @@
 """Utilities to get timing information."""
 from datetime import datetime
 import logging
-from typing import Callable
+from typing import Callable, Any
 
 import structlog
 
 LOGGER = structlog.get_logger(__name__)
 
 
-def timer(logger=LOGGER, details: bool = False, level: int = logging.INFO):
+def timer(logger: Any = LOGGER, details: bool = False, level: int = logging.INFO) -> Callable:
     """
     Decorate a function to log how log the function took to execute.
 
@@ -17,8 +17,8 @@ def timer(logger=LOGGER, details: bool = False, level: int = logging.INFO):
     :param level: logging level to log at.
     """
 
-    def decorator(fn: Callable):
-        def measure_time(*args, **kwargs):
+    def decorator(fn: Callable) -> Callable:
+        def measure_time(*args: Any, **kwargs: Any) -> Any:
             start_time = datetime.now()
             result = fn(*args, **kwargs)
             end_time = datetime.now()
@@ -27,7 +27,7 @@ def timer(logger=LOGGER, details: bool = False, level: int = logging.INFO):
             detailed_args = {}
             if details:
                 detailed_args["fn_args"] = args
-                detailed_args["fn_kwargs"] = kwargs
+                detailed_args["fn_kwargs"] = kwargs  # type: ignore
             logger.log(
                 level, "timing information", function=fn.__name__, seconds=seconds, **detailed_args
             )
