@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.1.3 - 2020-07-03
+- Migrate to poetry for packaging (no functional changes)
+
 ## 0.1.2 - 2019-12-27
 - Added namespace relative patcher and stricter linting/testing
 
