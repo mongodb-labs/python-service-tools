@@ -3,10 +3,14 @@ import logging
 from time import perf_counter
 from typing import Any, Callable, Awaitable, Set, Optional
 
-from starlette.middleware.base import BaseHTTPMiddleware
+from structlog import get_logger
+from starlette.middleware.base import BaseHTTPMiddleware, DispatchFunction
 from starlette import status
 from starlette.requests import Request
 from starlette.responses import JSONResponse, Response
+from starlette.types import ASGIApp
+
+LOGGER = get_logger(__name__)
 
 
 class StructlogReqestMiddleware(BaseHTTPMiddleware):
@@ -25,17 +29,22 @@ class StructlogReqestMiddleware(BaseHTTPMiddleware):
 
     def __init__(
         self,
-        logger: Any,
+        app: ASGIApp,
+        dispatch: DispatchFunction = None,
+        logger: Any = LOGGER,
         log_level: int = logging.INFO,
         ignored_status_codes: Optional[Set[int]] = None,
     ) -> None:
         """
         Create structlog request middleware.
 
+        :param app: Web application.
+        :param dispatch: Dispatch function.
         :param logger: Structlog logger to log to.
         :param log_level: Log level to write at.
         :param ignored_status_codes: Set of status codes to not report on.
         """
+        super().__init__(app, dispatch)
         self.logger = logger
         self.log_level = log_level
         self.ignored_status_codes = ignored_status_codes or set()

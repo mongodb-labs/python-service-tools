@@ -78,7 +78,7 @@ calls that throw exceptions will be converted 500 responses.
 from miscutils.middleware import StructlogRequestMiddleware
 import structlog
 
-app.add_middleware(StructlogRequestMiddleware(structlog.get_logger(__name__)))
+app.add_middleware(StructlogRequestMiddleware(app, logger=structlog.get_logger(__name__)))
 ```
 
 There are options to customize the logging:
@@ -90,9 +90,10 @@ import structlog
 from miscutils.middleware import StructlogRequestMiddleware
 
 app.add_middleware(StructlogRequestMiddleware(
-    structlog.get_logger(__name__),
+    app,
+    logger=structlog.get_logger(__name__),
     log_level=logging.DEBUG,  # Log at the DEBUG level.
-    ignored_status_codes: {404},  # Do not log 404 errors.
+    ignored_status_codes={404},  # Do not log 404 errors.
 ))
 ```
 

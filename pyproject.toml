@@ -1,6 +1,6 @@
 [tool.poetry]
 name = 'misc-utils-py'
-version = '0.2.0'
+version = '0.2.1'
 description = "Misc utilities for python projects."
 authors = [
     "Alexander Costas <alexander.costas@mongodb.com>",

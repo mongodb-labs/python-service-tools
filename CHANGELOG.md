@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.2.1 - 2020-07-04
+- Fix middleware interface.
+
 ## 0.2.0 - 2020-07-04
 - Add structlog logging starlette middelware.
 
