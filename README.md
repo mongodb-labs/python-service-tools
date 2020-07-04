@@ -2,6 +2,8 @@
 
 Utilities for working with python projects.
 
+![PyPI - Python Version](https://img.shields.io/pypi/pyversions/misc-utils-py) ![PyPI](https://img.shields.io/pypi/v/misc-utils-py.svg)
+
 ## Usage
 
 ### logging_config
