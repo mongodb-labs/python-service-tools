@@ -126,3 +126,6 @@ dmypy.json
 # IntelliJ Idea
 .idea/
 coverage.xml
+
+# VS Code
+.vscode/

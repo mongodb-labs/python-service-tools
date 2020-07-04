@@ -65,20 +65,49 @@ class TestStuff:
         patched.assert_called_once()
 ```
 
-## Testing
+### Starlette Structlog middleware 
+
+Middleware for [Starlette](https://www.starlette.io/) framework to log HTTP 
+requests to structlog. Log entries will be made at the start and end of
+each request. Error requests (400s and 500s) will also be logged. Any 
+calls that throw exceptions will be converted 500 responses.
+
+```python
+from miscutils.middleware import StructlogRequestMiddleware
+import structlog
+
+app.add_middleware(StructlogRequestMiddleware(structlog.get_logger(__name__)))
+```
+
+There are options to customize the logging:
+
+```python
+import logging
+
+import structlog
+from miscutils.middleware import StructlogRequestMiddleware
+
+app.add_middleware(StructlogRequestMiddleware(
+    structlog.get_logger(__name__),
+    log_level=logging.DEBUG,  # Log at the DEBUG level.
+    ignored_status_codes: {404},  # Do not log 404 errors.
+))
+```
+
+## Development Guide
+
+This project uses [poetry](https://python-poetry.org/):
+
+```
+$ pip install poetry
+$ cd to/project/root
+$ poetry install
+```
+
+### Testing
 
 Testing is done via pytest.
 
 ```
-$ pip install -r requirements.txt
-$ pytest
+$ poetry run pytest
 ```
-
-To get code coverage information, you can run pytest directly.
-
-```
-$ pip install -r requirements.txt
-$ pytest --cov=src --cov-report=html
-```
-
-This will generate an html coverage report in `htmlcov/` directory.

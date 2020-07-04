@@ -1,6 +1,6 @@
 """Utilities to get timing information."""
-from datetime import datetime
 import logging
+from time import perf_counter
 from typing import Callable, Any
 
 import structlog
@@ -19,11 +19,11 @@ def timer(logger: Any = LOGGER, details: bool = False, level: int = logging.INFO
 
     def decorator(fn: Callable) -> Callable:
         def measure_time(*args: Any, **kwargs: Any) -> Any:
-            start_time = datetime.now()
+            start_time = perf_counter()
             result = fn(*args, **kwargs)
-            end_time = datetime.now()
+            end_time = perf_counter()
 
-            seconds = (end_time - start_time).total_seconds()
+            seconds = end_time - start_time
             detailed_args = {}
             if details:
                 detailed_args["fn_args"] = args
