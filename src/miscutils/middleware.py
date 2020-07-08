@@ -13,7 +13,7 @@ from starlette.types import ASGIApp
 LOGGER = get_logger(__name__)
 
 
-class StructlogReqestMiddleware(BaseHTTPMiddleware):
+class StructlogRequestMiddleware(BaseHTTPMiddleware):
     """
     Logs information to a structlog logger about each HTTP request.
 

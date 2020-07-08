@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.3.0 - 2020-07-08
+- Fix typo in middleware name.
+
 ## 0.2.1 - 2020-07-04
 - Fix middleware interface.
 

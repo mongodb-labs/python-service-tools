@@ -15,7 +15,7 @@ class TestStructlogRequestMiddleWare:
         response_wrapper.set_result(response)
         logger = MagicMock()
 
-        middleware = under_test.StructlogReqestMiddleware(MagicMock(), logger=logger)
+        middleware = under_test.StructlogRequestMiddleware(MagicMock(), logger=logger)
 
         response = await middleware.dispatch(request, lambda _: response_wrapper)
 
@@ -32,7 +32,7 @@ class TestStructlogRequestMiddleWare:
         def throw_error(_):
             raise ValueError("Throwing an error")
 
-        middleware = under_test.StructlogReqestMiddleware(MagicMock(), logger=logger)
+        middleware = under_test.StructlogRequestMiddleware(MagicMock(), logger=logger)
 
         response = await middleware.dispatch(request, throw_error)
 
@@ -46,7 +46,7 @@ class TestStructlogRequestMiddleWare:
         response_wrapper.set_result(response)
         logger = MagicMock()
 
-        middleware = under_test.StructlogReqestMiddleware(MagicMock(), logger=logger)
+        middleware = under_test.StructlogRequestMiddleware(MagicMock(), logger=logger)
 
         response = await middleware.dispatch(request, lambda _: response_wrapper)
 
@@ -60,7 +60,7 @@ class TestStructlogRequestMiddleWare:
         response_wrapper.set_result(response)
         logger = MagicMock()
 
-        middleware = under_test.StructlogReqestMiddleware(
+        middleware = under_test.StructlogRequestMiddleware(
             MagicMock(), logger=logger, ignored_status_codes={404}
         )
 
