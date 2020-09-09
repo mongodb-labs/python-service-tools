@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.4.0 - 2020-09-09
+- Migrate to 'servicetools' module.
+
 ## 0.3.0 - 2020-07-08
 - Fix typo in middleware name.
 
@@ -7,7 +10,7 @@
 - Fix middleware interface.
 
 ## 0.2.0 - 2020-07-04
-- Add structlog logging starlette middelware.
+- Add structlog logging starlette middleware.
 
 ## 0.1.3 - 2020-07-03
 - Migrate to poetry for packaging (no functional changes)
