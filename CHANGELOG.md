@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.4.1 - 2020-09-09
+- Update README.
+
 ## 0.4.0 - 2020-09-09
 - Migrate to 'servicetools' module.
 

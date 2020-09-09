@@ -12,21 +12,21 @@ Default configuration for structlog.
 
 Configure json logging at the INFO level:
 ```python
-from miscutils.logging_config import default_logging, LogFormat, Verbosity
+from servicetools.logging_config import default_logging, LogFormat, Verbosity
 
 default_logging(Verbosity.INFO, LogFormat.JSON)
 ```
 
 Configure text logging at the DEBUG level:
 ```python
-from miscutils.logging_config import default_logging, LogFormat, Verbosity
+from servicetools.logging_config import default_logging, LogFormat, Verbosity
 
 default_logging(Verbosity.DEBUG, LogFormat.TEXT)
 ```
 
 Configure text logging at the DEBUG level and filter out external loggers:
 ```python
-from miscutils.logging_config import default_logging, LogFormat, Verbosity
+from servicetools.logging_config import default_logging, LogFormat, Verbosity
 
 default_logging(Verbosity.DEBUG, LogFormat.TEXT, ["extern_logger_1"])
 ```
@@ -35,7 +35,7 @@ default_logging(Verbosity.DEBUG, LogFormat.TEXT, ["extern_logger_1"])
 
 Decorator to add timing information to the logs:
 ```python
-from miscutils.timer import timer
+from servicetools.timer import timer
 
 import structlog
 
@@ -49,7 +49,7 @@ def some_function():
 Create namespace relative patches:
 ```python
 import some_package.sub_package.another_package as under_test
-from miscutils.testing import relative_patch_maker
+from servicetools.testing import relative_patch_maker
 
 patch = relative_patch_maker(under_test.__name__)
 
@@ -75,7 +75,7 @@ each request. Error requests (400s and 500s) will also be logged. Any
 calls that throw exceptions will be converted 500 responses.
 
 ```python
-from miscutils.middleware import StructlogRequestMiddleware
+from servicetools.middleware import StructlogRequestMiddleware
 import structlog
 
 app.add_middleware(StructlogRequestMiddleware(app, logger=structlog.get_logger(__name__)))
@@ -87,7 +87,7 @@ There are options to customize the logging:
 import logging
 
 import structlog
-from miscutils.middleware import StructlogRequestMiddleware
+from servicetools.middleware import StructlogRequestMiddleware
 
 app.add_middleware(StructlogRequestMiddleware(
     app,
