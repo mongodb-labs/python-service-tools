@@ -1,6 +1,6 @@
 from unittest.mock import MagicMock
 
-import miscutils.timer as under_test
+import servicetools.timer as under_test
 
 
 class TestTimer:

@@ -1,7 +1,7 @@
 import logging
 
-import miscutils.logging_config as under_test
-from miscutils.testing import relative_patch_maker
+import servicetools.logging_config as under_test
+from servicetools.testing import relative_patch_maker
 
 patch = relative_patch_maker(under_test.__name__)
 

@@ -3,7 +3,7 @@ from unittest.mock import MagicMock
 
 import pytest
 
-import miscutils.middleware as under_test
+import servicetools.middleware as under_test
 
 
 class TestStructlogRequestMiddleWare:

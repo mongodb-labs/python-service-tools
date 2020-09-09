@@ -1,11 +1,11 @@
 from unittest.mock import patch
 
-import miscutils.testing as under_test
+import servicetools.testing as under_test
 
 
 class TestPatcher:
     # Its tempting to use the utility to test itself...
-    @patch("miscutils.testing.patch")
+    @patch("servicetools.testing.patch")
     def test_creates_relative_patches(self, mock_patch):
         mock_patch.return_value = "patch_context"
         relative_patch = under_test.relative_patch_maker("some_namespace")

@@ -1,4 +1,4 @@
-name: misc-utils-py
+name: python-run-tests
 
 on: [push]
 

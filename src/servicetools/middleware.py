@@ -17,10 +17,10 @@ class StructlogRequestMiddleware(BaseHTTPMiddleware):
     """
     Logs information to a structlog logger about each HTTP request.
 
-    Logging will occur at the start and completion of each request. 
+    Logging will occur at the start and completion of each request.
 
-    If a request throws an exception, it will be logged and converted to a 500 
-    response. 
+    If a request throws an exception, it will be logged and converted to a 500
+    response.
 
     Any failures responses (400s and 500s) will be logged. A set of failure
     codes to ignore can be provided to not log certain error codes (for example,
