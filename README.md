@@ -2,7 +2,7 @@
 
 Utilities for working with python services.
 
-![PyPI - Python Version](https://img.shields.io/pypi/pyversions/misc-utils-py) ![PyPI](https://img.shields.io/pypi/v/misc-utils-py.svg)
+![PyPI - Python Version](https://img.shields.io/pypi/pyversions/python-service-tools) ![PyPI](https://img.shields.io/pypi/v/python-service-tools.svg)
 
 ## Usage
 

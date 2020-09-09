@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.4.2 - 2020-09-09
+- More README updates.
+
 ## 0.4.1 - 2020-09-09
 - Update README.
 
