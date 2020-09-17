@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.4.3 - 2020-09-16
+- Don't swallow exceptions.
+
 ## 0.4.2 - 2020-09-09
 - More README updates.
 

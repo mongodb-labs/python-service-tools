@@ -34,9 +34,10 @@ class TestStructlogRequestMiddleWare:
 
         middleware = under_test.StructlogRequestMiddleware(MagicMock(), logger=logger)
 
-        response = await middleware.dispatch(request, throw_error)
+        with pytest.raises(ValueError):
+            response = await middleware.dispatch(request, throw_error)
 
-        assert logger.log.call_count == 4
+        assert logger.log.call_count == 2
 
     @pytest.mark.asyncio
     async def test_error_logging(self):

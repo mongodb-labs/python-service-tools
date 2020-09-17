@@ -7,7 +7,7 @@ from structlog import get_logger
 from starlette.middleware.base import BaseHTTPMiddleware, DispatchFunction
 from starlette import status
 from starlette.requests import Request
-from starlette.responses import JSONResponse, Response
+from starlette.responses import Response
 from starlette.types import ASGIApp
 
 LOGGER = get_logger(__name__)
@@ -66,9 +66,7 @@ class StructlogRequestMiddleware(BaseHTTPMiddleware):
             response = await call_next(request)
         except Exception as e:
             self.__log("Exception Occurred", exc_info=True)
-            response = JSONResponse(
-                {"error": str(e)}, status_code=status.HTTP_500_INTERNAL_SERVER_ERROR
-            )
+            raise e
 
         end_time = perf_counter()
         duration = end_time - start_time
