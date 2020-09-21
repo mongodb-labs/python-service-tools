@@ -1,6 +1,6 @@
 [tool.poetry]
 name = 'python-service-tools'
-version = '0.4.3'
+version = '0.4.4'
 description = "Utilities for working with python services."
 authors = [
     "Alexander Costas <alexander.costas@mongodb.com>",
@@ -16,7 +16,7 @@ packages = [
 [tool.poetry.dependencies]
 python = "^3.7"
 python-json-logger = "^0.1"
-structlog = "^19"
+structlog = ">=19"
 starlette = "^0.13"
 
 [tool.poetry.dev-dependencies]
