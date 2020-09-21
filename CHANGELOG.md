@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.4.4 - 2020-09-21
+- Support structlog v20.
+
 ## 0.4.3 - 2020-09-16
 - Don't swallow exceptions.
 
