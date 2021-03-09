@@ -97,6 +97,37 @@ app.add_middleware(StructlogRequestMiddleware(
 ))
 ```
 
+### Dramatiq Lazy Actor specification
+Specification for [dramatiq](https://dramatiq.io/) actors that allows them to connect a broker
+explicitly through the `init_actor` function rather than implicitly when they are created. This allows
+you to defer setting up your Rabbitmq broker to a time of your choosing. To create a new actor that
+uses this behavior, set up your dramatiq actors like so
+```python
+import dramatiq
+
+from servicetools.lazyactor import LazyActor
+
+@dramatiq.actor(actor_class=LazyActor)
+def test_func(data: str) -> None:
+    print(data)
+```
+
+Now, whenever you have set up your Rabbitmq instance and connected to it, tell your actors to connect
+to it like so
+```python
+from dramatiq.brokers.rabbitmq import RabbitmqBroker
+from pika import PlainCredentials
+import dramatiq
+
+broker = RabbitmqBroker(
+    host="localhost",
+    credentials=PlainCredentials(username="user", password="password"),
+)
+dramatiq.set_broker(broker)
+
+test_func.init_actor(broker=broker)
+```
+
 ## Development Guide
 
 This project uses [poetry](https://python-poetry.org/):
