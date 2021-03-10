@@ -18,6 +18,8 @@ python = "^3.7"
 python-json-logger = "^0.1"
 structlog = ">=19"
 starlette = "^0.13"
+dramatiq = {extras = ["rabbitmq", "watch"], version = "^1.10.0"}
+pika = "^1.2.0"
 
 [tool.poetry.dev-dependencies]
 pytest = "^6"

@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.4.5 - 2021-03-09
+- Add Lazy Actor specification for dramatiq actors.
+
 ## 0.4.4 - 2020-09-21
 - Support structlog v20.
 
