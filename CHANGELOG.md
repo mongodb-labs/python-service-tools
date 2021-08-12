@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.4.6 - 2021-08-12
+- Relax dependency requirements.
+
 ## 0.4.5 - 2021-03-09
 - Add Lazy Actor specification for dramatiq actors.
 
