@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.4.7 - 2021-08-16
+- Enabling configuring multiple logs with json format.
+
 ## 0.4.6 - 2021-08-12
 - Relax dependency requirements.
 

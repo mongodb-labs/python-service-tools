@@ -4,7 +4,7 @@ from enum import IntEnum, Enum, auto
 import logging
 import logging.config
 import sys
-from typing import Iterable
+from typing import Any, Dict, Iterable, Optional
 
 import structlog
 
@@ -38,7 +38,10 @@ class Verbosity(IntEnum):
 
 
 def default_logging(
-    verbosity: int, log_format: LogFormat = LogFormat.TEXT, external_logs: Iterable[str] = None
+    verbosity: int,
+    log_format: LogFormat = LogFormat.TEXT,
+    external_logs: Optional[Iterable[str]] = None,
+    loggers_to_configure: Optional[Iterable[str]] = None,
 ) -> None:
     """
     Configure structlog based on the given parameters.
@@ -49,6 +52,7 @@ def default_logging(
     :param log_format: Format to logs should be written in.
     :param external_logs: External modules that should have logging turned down unless verbosity is
         set to highest level.
+    :param loggers_to_configure: Names of loggers to configure with the same configuration.
     """
     level = Verbosity(verbosity).level()
 
@@ -69,6 +73,8 @@ def default_logging(
         )
     elif log_format == LogFormat.JSON:
         # Setup json logging.
+        logger_config = {"handlers": ["json"], "level": level}
+        loggers = build_loggers_dictionary(loggers_to_configure, logger_config)
         logging.config.dictConfig(
             {
                 "version": 1,
@@ -79,7 +85,7 @@ def default_logging(
                     }
                 },
                 "handlers": {"json": {"class": "logging.StreamHandler", "formatter": "json"}},
-                "loggers": {"": {"handlers": ["json"], "level": level}},
+                "loggers": loggers,
             }
         )
 
@@ -106,3 +112,21 @@ def default_logging(
         # Turn down logging for modules outside this project.
         for logger in external_logs:
             logging.getLogger(logger).setLevel(logging.WARNING)
+
+
+def build_loggers_dictionary(
+    loggers: Optional[Iterable[str]], logger_config: Dict[str, Any]
+) -> Dict[str, Dict]:
+    """
+    Build a dictionary of loggers to configure.
+
+    This will automatically include a default logger under `""`.
+
+    :param loggers: List of log names to include in dictionary.
+    :param logger_config: Configuration to use for logging.
+    :return: Dictionary defining the logging configuration for each logger.
+    """
+    logger_dict = {"": logger_config}
+    if loggers:
+        logger_dict.update({logger: logger_config for logger in loggers})
+    return logger_dict
