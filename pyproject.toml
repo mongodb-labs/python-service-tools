@@ -1,6 +1,6 @@
 [tool.poetry]
 name = 'python-service-tools'
-version = '0.4.6'
+version = '0.4.7'
 description = "Utilities for working with python services."
 authors = [
     "Alexander Costas <alexander.costas@mongodb.com>",
@@ -39,3 +39,7 @@ flake8-ignore = "W605 W503 W291 E203 E501 F821"
 [tool.black]
 line-length = 100
 target-version = ['py37']
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

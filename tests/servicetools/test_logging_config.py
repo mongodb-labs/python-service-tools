@@ -48,3 +48,22 @@ class TestDefaultConfiguration:
         )
         mock_get_logger.assert_called_with("some_external_log")
         mock_get_logger.return_value.setLevel.assert_called_with(logging.WARNING)
+
+
+class TestBuildLoggersDictionary:
+    def test_no_loggers_should_include_default(self):
+        logger_config = {"config": "my config"}
+
+        logger_dict = under_test.build_loggers_dictionary(None, logger_config)
+
+        assert logger_dict == {"": logger_config}
+
+    def test_multiple_loggers_should_be_included(self):
+        logger_config = {"config": "my config"}
+        loggers = [f"logger_{i}" for i in range(5)]
+
+        logger_dict = under_test.build_loggers_dictionary(loggers, logger_config)
+
+        assert logger_dict[""] == logger_config
+        for logger in loggers:
+            assert logger_dict[logger] == logger_config
