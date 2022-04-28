@@ -8,7 +8,7 @@ from starlette.middleware.base import BaseHTTPMiddleware, DispatchFunction
 from starlette import status
 from starlette.requests import Request
 from starlette.responses import Response
-from starlette.types import ASGIApp
+from starlette.types import ASGIApp, Message
 
 LOGGER = get_logger(__name__)
 
@@ -34,6 +34,7 @@ class StructlogRequestMiddleware(BaseHTTPMiddleware):
         logger: Any = LOGGER,
         log_level: int = logging.INFO,
         ignored_status_codes: Optional[Set[int]] = None,
+        include_request_in_failed_requests: Optional[bool] = False,
     ) -> None:
         """
         Create structlog request middleware.
@@ -43,15 +44,31 @@ class StructlogRequestMiddleware(BaseHTTPMiddleware):
         :param logger: Structlog logger to log to.
         :param log_level: Log level to write at.
         :param ignored_status_codes: Set of status codes to not report on.
+        :param include_request_in_failed_requests: Whether to ignore the request in failed calls.
         """
         super().__init__(app, dispatch)
         self.logger = logger
         self.log_level = log_level
+        self.include_request_in_failed_requests = include_request_in_failed_requests
         self.ignored_status_codes = ignored_status_codes or set()
 
     def __log(self, msg: str, **kwargs: Any) -> None:
         """Log at the configured level."""
         self.logger.log(self.log_level, msg, **kwargs)
+
+    @staticmethod
+    async def set_body(request: Request) -> None:
+        """
+        Set the body of the request so that it can be read multiple times.
+
+        :param request: The request to set the body of.
+        """
+        receive_ = await request._receive()
+
+        async def receive() -> Message:
+            return receive_
+
+        request._receive = receive
 
     async def dispatch(
         self, request: Request, call_next: Callable[[Request], Awaitable[Response]]
@@ -59,6 +76,9 @@ class StructlogRequestMiddleware(BaseHTTPMiddleware):
         """Log information about the request and call the next layer."""
         method = request.method
         endpoint = request.url.path
+
+        await self.set_body(request)
+        request_json = await request.json()
 
         self.__log("HTTP request start", method=method, endpoint=endpoint)
         start_time = perf_counter()
@@ -83,12 +103,16 @@ class StructlogRequestMiddleware(BaseHTTPMiddleware):
             status_code >= status.HTTP_400_BAD_REQUEST
             and status_code not in self.ignored_status_codes
         ):
-            self.__log(
-                "HTTP request error",
-                method=method,
-                endpoint=endpoint,
-                status_code=status_code,
-                content=response.body,
-            )
-
+            if self.include_request_in_failed_requests:
+                self.__log(
+                    "HTTP request error",
+                    method=method,
+                    endpoint=endpoint,
+                    status_code=status_code,
+                    request=request_json,
+                )
+            else:
+                self.__log(
+                    "HTTP request error", method=method, endpoint=endpoint, status_code=status_code
+                )
         return response
