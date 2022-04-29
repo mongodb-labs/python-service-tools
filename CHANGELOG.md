@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.5.0 - 2022-04-28
+- Add ability to log out the request on a failed api call.
+
 ## 0.4.7 - 2021-08-16
 - Enabling configuring multiple logs with json format.
 
