@@ -12,7 +12,7 @@ def create_mock_request() -> MagicMock:
     request_wrapper = Future()
     request_body = "fake-body"
     request_wrapper.set_result(request_body)
-    request.json.return_value = request_wrapper
+    request.body.return_value = request_wrapper
     request._receive.return_value = request_wrapper
     return request
 

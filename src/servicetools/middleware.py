@@ -78,7 +78,7 @@ class StructlogRequestMiddleware(BaseHTTPMiddleware):
         endpoint = request.url.path
 
         await self.set_body(request)
-        request_json = await request.json()
+        request_body = await request.body()
 
         self.__log("HTTP request start", method=method, endpoint=endpoint)
         start_time = perf_counter()
@@ -109,7 +109,7 @@ class StructlogRequestMiddleware(BaseHTTPMiddleware):
                     method=method,
                     endpoint=endpoint,
                     status_code=status_code,
-                    request=request_json,
+                    request=request_body,
                 )
             else:
                 self.__log(

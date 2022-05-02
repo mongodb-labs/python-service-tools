@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.5.1 - 2022-04-29
+- Switch to using `body()` so that `/swagger` calls are handled.
+
 ## 0.5.0 - 2022-04-28
 - Add ability to log out the request on a failed api call.
 
