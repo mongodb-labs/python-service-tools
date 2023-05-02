@@ -23,7 +23,6 @@ dramatiq = {extras = ["rabbitmq", "watch"], version = ">=1.10"}
 [tool.poetry.dev-dependencies]
 pytest = ">=6"
 pytest-benchmark = "^4.0.0"
-pluggy = "^1.0.0"
 pytest-flake8 = "^1.0"
 black = "^20.8b1"
 pytest-black = "^0.3"
