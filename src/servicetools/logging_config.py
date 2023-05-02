@@ -116,7 +116,7 @@ def default_logging(
 
 def build_loggers_dictionary(
     loggers: Optional[Iterable[str]], logger_config: Dict[str, Any]
-) -> Dict[str, Dict]:
+) -> Dict[str, Any]:
     """
     Build a dictionary of loggers to configure.
 
