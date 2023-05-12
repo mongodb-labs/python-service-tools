@@ -1,4 +1,7 @@
 import logging
+import sys
+
+from structlog.testing import capture_logs
 
 import servicetools.logging_config as under_test
 from servicetools.testing import relative_patch_maker
@@ -67,3 +70,17 @@ class TestBuildLoggersDictionary:
         assert logger_dict[""] == logger_config
         for logger in loggers:
             assert logger_dict[logger] == logger_config
+
+
+class TestExceptionLogging:
+    def test_exceptions_are_logged(self):
+        under_test.default_logging(
+            under_test.Verbosity.WARNING, log_format=under_test.LogFormat.TEXT
+        )
+        assert sys.excepthook is under_test._log_uncaught_exceptions
+        with capture_logs() as captured:
+            under_test._log_uncaught_exceptions(Exception, Exception("This is an exception"), ())
+            assert len(captured) == 1
+            assert captured[0]["event"] == "Uncaught exception"
+            assert captured[0]["log_level"] == "critical"
+            assert captured[0]["exc_info"][1].args[0] == "This is an exception"

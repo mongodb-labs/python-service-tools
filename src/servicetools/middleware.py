@@ -30,7 +30,7 @@ class StructlogRequestMiddleware(BaseHTTPMiddleware):
     def __init__(
         self,
         app: ASGIApp,
-        dispatch: DispatchFunction = None,
+        dispatch: DispatchFunction = None,  # type: ignore[assignment]
         logger: Any = LOGGER,
         log_level: int = logging.INFO,
         ignored_status_codes: Optional[Set[int]] = None,

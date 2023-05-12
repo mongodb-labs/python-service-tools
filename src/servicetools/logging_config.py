@@ -1,9 +1,10 @@
-"""Default logging configuration for struclog."""
+"""Default logging configuration for structlog."""
 
 from enum import IntEnum, Enum, auto
 import logging
 import logging.config
 import sys
+from types import TracebackType
 from typing import Any, Dict, Iterable, Optional
 
 import structlog
@@ -35,6 +36,20 @@ class Verbosity(IntEnum):
         """
         v = self.value
         return VERBOSE_LEVELS[v] if v < len(VERBOSE_LEVELS) else VERBOSE_LEVELS[-1]
+
+
+def _log_uncaught_exceptions(
+    exception_class: type[BaseException],
+    exception: BaseException,
+    trace: TracebackType,
+) -> None:
+    """Handle logging uncaught exceptions."""
+    log = structlog.get_logger()
+
+    log.critical(
+        "Uncaught exception",
+        exc_info=(exception_class, exception, trace),
+    )
 
 
 def default_logging(
@@ -85,7 +100,7 @@ def default_logging(
                     }
                 },
                 "handlers": {"json": {"class": "logging.StreamHandler", "formatter": "json"}},
-                "loggers": loggers,
+                "loggers": loggers,  # type: ignore[typeddict-item]
             }
         )
 
@@ -112,6 +127,9 @@ def default_logging(
         # Turn down logging for modules outside this project.
         for logger in external_logs:
             logging.getLogger(logger).setLevel(logging.WARNING)
+
+    # Log exceptions
+    sys.excepthook = _log_uncaught_exceptions  # type: ignore[assignment]
 
 
 def build_loggers_dictionary(
