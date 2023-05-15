@@ -1,6 +1,6 @@
 [tool.poetry]
 name = 'python-service-tools'
-version = '0.5.1'
+version = '0.5.2'
 description = "Utilities for working with python services."
 authors = [
     "Alexander Costas <alexander.costas@mongodb.com>",

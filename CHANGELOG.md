@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.5.2 - 2023-05-15
+- Add critical level logs for unhandled exceptions.
+
 ## 0.5.1 - 2022-04-29
 - Switch to using `body()` so that `/swagger` calls are handled.
 
