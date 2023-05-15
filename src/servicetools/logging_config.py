@@ -41,7 +41,7 @@ class Verbosity(IntEnum):
 def _log_uncaught_exceptions(
     exception_class: type[BaseException],
     exception: BaseException,
-    trace: TracebackType,
+    trace: Optional[TracebackType] = None,
 ) -> None:
     """Handle logging uncaught exceptions."""
     log = structlog.get_logger()
@@ -100,7 +100,7 @@ def default_logging(
                     }
                 },
                 "handlers": {"json": {"class": "logging.StreamHandler", "formatter": "json"}},
-                "loggers": loggers,  # type: ignore[typeddict-item]
+                "loggers": loggers,
             }
         )
 
@@ -129,12 +129,12 @@ def default_logging(
             logging.getLogger(logger).setLevel(logging.WARNING)
 
     # Log exceptions
-    sys.excepthook = _log_uncaught_exceptions  # type: ignore[assignment]
+    sys.excepthook = _log_uncaught_exceptions
 
 
 def build_loggers_dictionary(
     loggers: Optional[Iterable[str]], logger_config: Dict[str, Any]
-) -> Dict[str, Dict]:
+) -> Dict[str, Any]:
     """
     Build a dictionary of loggers to configure.
 
