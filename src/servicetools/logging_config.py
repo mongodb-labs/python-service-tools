@@ -4,8 +4,10 @@ from enum import IntEnum, Enum, auto
 import logging
 import logging.config
 import sys
+import threading
 from types import TracebackType
 from typing import Any, Dict, Iterable, Optional
+from _thread import _ExceptHookArgs as ExceptHookArgs
 
 import structlog
 
@@ -38,9 +40,14 @@ class Verbosity(IntEnum):
         return VERBOSE_LEVELS[v] if v < len(VERBOSE_LEVELS) else VERBOSE_LEVELS[-1]
 
 
+def _log_uncaught_thread_exceptions(args: ExceptHookArgs) -> None:
+    """Handle logging uncaught exceptions in threads."""
+    _log_uncaught_exceptions(args.exc_type, args.exc_value, args.exc_traceback)
+
+
 def _log_uncaught_exceptions(
     exception_class: type[BaseException],
-    exception: BaseException,
+    exception: Optional[BaseException] = None,
     trace: Optional[TracebackType] = None,
 ) -> None:
     """Handle logging uncaught exceptions."""
@@ -130,6 +137,7 @@ def default_logging(
 
     # Log exceptions
     sys.excepthook = _log_uncaught_exceptions
+    threading.excepthook = _log_uncaught_thread_exceptions
 
 
 def build_loggers_dictionary(
