@@ -6,7 +6,7 @@ import logging.config
 import sys
 import threading
 from types import TracebackType
-from typing import Any, Dict, Iterable, Optional
+from typing import Any, Dict, Iterable, Optional, Type
 from _thread import _ExceptHookArgs as ExceptHookArgs
 
 import structlog
@@ -46,7 +46,7 @@ def _log_uncaught_thread_exceptions(args: ExceptHookArgs) -> None:
 
 
 def _log_uncaught_exceptions(
-    exception_class: type[BaseException],
+    exception_class: Type[BaseException],
     exception: Optional[BaseException] = None,
     trace: Optional[TracebackType] = None,
 ) -> None:
