@@ -24,14 +24,16 @@ typed-ast = "^1.5.4"
 
 [tool.poetry.dev-dependencies]
 pytest = "^6"
-pytest-flake8 = "^1.0"
-black = "^20.8b1"
+pytest-flake8 = "<6.0"
+flake8 = "<5.0.0"
+black = "^22.3.0"
 pytest-black = "^0.3"
 pytest-mypy = "^0.7"
 mypy = "^1.2.0"
 pytest-cov = "^2.10"
 pytest-asyncio = "^0.14"
 pytest-pydocstyle = "^2.2"
+pydocstyle = "6.1.1"
 
 [tool.pytest.ini_options]
 addopts = "--flake8 --black --pydocstyle --mypy --cov=servicetools --cov-fail-under=90 --cov-branch --cov-report=term-missing"
